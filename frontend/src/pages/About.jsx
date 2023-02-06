@@ -1,0 +1,24 @@
+import { useState, useEffect } from 'react';
+
+function About() {
+    let [text, setText] = useState("Loading...");
+
+    useEffect(() => {
+        fetch("http://localhost:5000/api")
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data);
+            setText(JSON.stringify(data));
+        })
+    }, [])
+
+    return (
+        <div className="About">
+            <p>
+                {text}
+            </p>
+        </div>
+    )
+}
+
+export default About;
