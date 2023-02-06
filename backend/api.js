@@ -1,3 +1,5 @@
+//test@test.com Password!
+
 var express = require('express');
 var cors = require('cors')
 
@@ -11,5 +13,11 @@ var corsOptions = {
 router.get('/', cors(), (req, res) => {
     res.json({"data": "nothing right now"})
 });
+
+router.get('/sellers', cors(), (req, res) => {
+    return // retrieve all sellers from db
+})
+
+//sellers route with query options to filter searches
 
 module.exports = router;
