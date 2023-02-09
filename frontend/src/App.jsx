@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
 import Profile from './pages/Profile'
+import Callback from './Callback'
 import NavBar from './NavBar'
 
 //configure routes
@@ -14,6 +15,7 @@ const App = () => {
          <Route path="/" element={<Home />} />
          <Route path="/about" element={<About />} />
          <Route path="/profile" element={<Profile />} />
+         <Route path="/auth0callback" element={<Callback />} />
       </Routes>
     </>
  )

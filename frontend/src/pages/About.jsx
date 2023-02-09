@@ -4,12 +4,14 @@ function About() {
     let [text, setText] = useState("Loading...");
 
     useEffect(() => {
-        fetch("http://localhost:5000/api")
+        
+        fetch("http://localhost:5000/api/test")
         .then(response => response.json())
         .then((data) => {
             console.log(data);
             setText(JSON.stringify(data));
         })
+        
     }, [])
 
     return (

@@ -3,14 +3,13 @@ import { useAuth0 } from "@auth0/auth0-react"
 
 const NavBar = () => {
 
-    const { loginWithRedirect, isAuthenticated } = useAuth0();
-
+    const { user, loginWithRedirect, isAuthenticated } = useAuth0();
 
     return (
       <nav className="navbar">
         <ul className="nav">
             <li className="nav-item">
-                <NavLink className="nav-link" to="/">Home</NavLink>
+                <NavLink className="nav-link" to="/">Clifford</NavLink>
             </li>
             <li className="nav-item">
                 <NavLink className="nav-link" to="/about">About</NavLink>

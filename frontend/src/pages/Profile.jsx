@@ -10,6 +10,8 @@ const { logout } = useAuth0();
     return <div>Loading ...</div>;
   }
 
+  console.log(user);
+
   return (
     isAuthenticated && (
       <div>
