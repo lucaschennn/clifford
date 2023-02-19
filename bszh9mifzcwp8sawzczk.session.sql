@@ -2,7 +2,7 @@
 
 
 --@block
-DESCRIBE products;
+SELECT * FROM users;
 
 --@block
 CREATE TABLE IF NOT EXISTS sellers(

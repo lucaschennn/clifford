@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Profile = () => {
-  const { user, isAuthenticated, isLoading, logout } = useAuth0();
+  const { user, isAuthenticated, isLoading, logout, getAccessTokenSilently } = useAuth0();
   const navigate = useNavigate();
 
   if (isLoading) {
@@ -16,6 +16,7 @@ const Profile = () => {
   }
 
   console.log(user);
+  console.log(user.id);
 
   return (
     isAuthenticated && (

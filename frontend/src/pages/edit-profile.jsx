@@ -1,32 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useNavigate } from 'react-router-dom';
+import { redirect } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert';
 import axios from 'axios';
 
 
 const EditProfile = () => {
 
-    const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
-    console.log(user);
+    const { user, isAuthenticated, isLoading, logout } = useAuth0();
 
-    const navigate = useNavigate();
-
+    if (isLoading) {
+        return <div>Loading ...</div>;
+    }
     
     if(!isAuthenticated) {
-        navigate('/')
+        redirect('/')
     }
 
     useEffect(() => {
-        if(user) {
-            console.log(user.email)
-            fetch('http://localhost:5000/api/get_user?' + new URLSearchParams({
-                email: user.email
-            }))
-            .then((res) => res.json())
-            .then((data) => {
-                setText(data)
-            })
-        }
+        fetch('http://localhost:5000/api/get_user?' + new URLSearchParams({
+            email: user.email
+        }))
+        .then((res) => res.json())
+        .then((data) => {
+            setText(data)
+        })
+
 
     }, []);
 
@@ -34,6 +33,8 @@ const EditProfile = () => {
         nickname: user.nickname,
         email: user.email
     });
+
+    const [ alert, setAlert ] = useState(false)
 
     const handleChange = (event) => {
         const target = event.target;
@@ -45,16 +46,29 @@ const EditProfile = () => {
 
     const handleUpdate = (event) => {
 
-        fetch('http://localhost:5000/api/update_user?' + new URLSearchParams({...text, old_email: user.email}))
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data);
-            if(data.result == "success") {
-                user.nickname = text.nickname;
-                user.email = text.email;
-                loginWithRedirect();
-            }
-        })
+        if(text.email === user.email && text.nickname === user.nickname) {
+            setAlert(true);
+            return;
+        }
+
+        const response = confirm("Are you sure you want to update your information? You will be logged out.");
+
+        if(!response) {
+            redirect('/profile')
+        }
+        else {
+            fetch('http://localhost:5000/api/update_user?' + new URLSearchParams({...text, old_email: user.email}))
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                if(data.result == "success") {
+                    user.nickname = text.nickname;
+                    user.email = text.email;
+                    logout();
+                }
+            })
+        }
+
         /*
         axios.patch('http://localhost:5000/api/update_user', text, {'content': 'json'})
         .then((res) => res.json())
@@ -83,6 +97,11 @@ const EditProfile = () => {
                     Update
                 </button>
             </div>
+            {alert &&
+              <Alert bsStyle="warning" onClose = {() => setAlert(false) } dismissible>
+                No fields were changed!
+              </Alert>
+            }
         </div>
     )
 }

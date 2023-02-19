@@ -19,7 +19,7 @@ const App = () => {
          <Route path="/" element={<Home />} />
          <Route path="/about" element={<About />} />
          <Route path="/profile" element={<Profile />} />
-         <Route path="/edit-profile" element={<EditProfile/>} />
+         <Route path="/edit-profile" element={<EditProfile user={user}/>} />
          <Route path="/auth0callback" element={<Callback />} />
       </Routes>
     </>
