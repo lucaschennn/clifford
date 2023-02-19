@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "bszh9mifzcwp8sawzczk-mysql.services.clever-cloud.com",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "bszh9mifzcwp8sawzczk",
+            "database": "bszh9mifzcwp8sawzczk",
+            "username": "uyhz9vk8br9lymwa",
+            "askForPassword": true
+        }
+    ]
+}

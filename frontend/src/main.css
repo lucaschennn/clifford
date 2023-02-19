@@ -1,0 +1,7 @@
+.profile-btn-group {
+    margin-top: 1%;
+}
+
+.profile-btn-group > * {
+    margin: 1%;
+}

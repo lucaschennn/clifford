@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { Auth0Provider } from '@auth0/auth0-react'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import './main.css'
 
 import authConfig from '../auth-config.json';
 
