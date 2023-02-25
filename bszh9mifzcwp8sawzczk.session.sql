@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS sellers(
     id INT PRIMARY KEY AUTO_INCREMENT,
     owner_id INT NOT NULL,
     name VARCHAR(63) NOT NULL,
+    thumbnail VARCHAR(63) NOT NULL,
     category VARCHAR(31) NOT NULL,
     keywords json,
     FOREIGN KEY (owner_id) REFERENCES users(id)
@@ -37,4 +38,13 @@ CREATE TABLE IF NOT EXISTS purchases(
 )
 
 --@block
-SELECT * FROM users WHERE email = "test@test.com" LIMIT 1
+SELECT * FROM users
+
+--@block
+INSERT INTO sellers (owner_id, name, category, keywords, thumbnail)
+VALUES
+(4, "Sample 2", "Band", '{"keywords": ["outdoor concert", "rock", "grunge"]}', "sample_2.jpg")
+
+
+--@block
+SELECT * FROM sellers

@@ -5,3 +5,18 @@
 .profile-btn-group > * {
     margin: 1%;
 }
+
+.browse {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1%;
+}
+
+.thumbnail {
+    margin: 1%;
+}
+
+.thumbnail-img {
+    height:300px;
+    border-radius: 25px;
+}

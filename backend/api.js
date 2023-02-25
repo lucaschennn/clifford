@@ -45,11 +45,31 @@ router.get('/get_user', cors(corsOptions), (req, res) => {
             }
             else {
                 console.log(results)
-                res.json({"nickname": results[0].nickname, "email": results[0].email})
+                res.json({"nickname": results[0].nickname, "email": results[0].email, "prefs": results[0].prefs})
             }
 
         }
       )
+
+});
+
+router.get('/get_featured', cors(corsOptions), (req, res) => {
+    let params = req.query;
+    let limit = 5;
+    console.log(params);
+    if(params.prefs === 'null') {
+        connection.query(
+            `SELECT * FROM sellers ORDER BY RAND() LIMIT ${limit};`, (err, results, fields) => {
+                if(err) {
+                    console.log(err);
+                }
+                else {
+                    res.json(results);
+                }
+            }
+        )
+    }
+    // else {}
 
 });
 
