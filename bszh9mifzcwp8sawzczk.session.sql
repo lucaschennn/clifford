@@ -20,8 +20,8 @@ CREATE TABLE IF NOT EXISTS products(
     id INT PRIMARY KEY AUTO_INCREMENT,
     business_id INT NOT NULL,
     price float NOT NULL,
-    name float NOT NULL,
-    description blob NOT NULL,
+    name varchar(100) NOT NULL,
+    description TEXT NOT NULL,
     product_url varchar(100),
     quantity int NOT NULL,
     FOREIGN KEY (business_id) REFERENCES sellers(id)
@@ -43,8 +43,15 @@ SELECT * FROM users
 --@block
 INSERT INTO sellers (owner_id, name, category, keywords, thumbnail)
 VALUES
-(4, "Sample 2", "Band", '{"keywords": ["outdoor concert", "rock", "grunge"]}', "sample_2.jpg")
 
+
+--@block
+INSERT INTO products (business_id, price, name, description, product_url, quantity)
+VALUES
+('2', 1.99, "Carrots", "They are carrots", "1.jpg", 1000),
+('2', 5.99, "Fudge", "Yummy fudge yum", "2.jpg", 50),
+('3', 0, "Concert at Memorial Park", "Come to Memorial Park Friday April 7th for a free outdoor concert", "3.jpg", 0),
+('3', 20.00, "The Zooeys Tee in Pink", "Tasteful. Luxurious. Evergreen. The Classic Zooeys T Shirt.", "4.jpg", 100)
 
 --@block
 SELECT * FROM sellers

@@ -14,9 +14,21 @@
 
 .thumbnail {
     margin: 1%;
+    transition: all .2s ease-in-out; 
 }
 
 .thumbnail-img {
     height:300px;
     border-radius: 25px;
+}
+
+.thumbnail:hover {
+    z-index: 2;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+
+.seller-profile-img {
+    width: 50%;
 }

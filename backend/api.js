@@ -130,6 +130,41 @@ router.get('/test', cors(corsOptions), (req, res) => {
     })
 });
 
+router.get('/get_seller/:id', cors(corsOptions), (req, res) => {
+    const id = req.params.id;
+    connection.query(
+        `SELECT * FROM sellers WHERE id="${id}}" LIMIT 1;`, (err, results, fields) => {
+            if(err) {
+                console.log(err);
+            }
+            else {
+                console.log(results)
+                res.json(results)
+            }
+
+        }
+      )
+})
+
+router.get('/get_product', cors(corsOptions), (req, res) => { // {seller_id: null, product_id: null, limit: required}
+    if(req.query.seller_id) {
+        const id = req.query.seller_id;
+        const limit = req.query.limit;
+        connection.query(
+            `SELECT * FROM products WHERE business_id="${id}}" LIMIT ${limit};`, (err, results, fields) => {
+                if(err) {
+                    console.log(err);
+                }
+                else {
+                    console.log(results)
+                    res.json(results)
+                }
+    
+            }
+          )
+    }
+})
+
 router.get('/insert/user', cors(corsOptions), (req, res) => {
     //params: {email: email, username: username, prefs,{}}
     //db.insert(users, params) table, to insert (in json)

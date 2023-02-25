@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
-import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
 
     const { user, isAuthenticated, isLoading, logout } = useAuth0();
-
+    const navigate = useNavigate();
     const [showing, setShowing] = useState('featured')
     const [filters, setFilters] = useState({
         "women-owned": false,
@@ -35,6 +35,11 @@ function Home() {
         }
     }, [isLoading]);
 
+    const handleNavigate = (event) => {
+        const id = event.currentTarget.id
+        navigate("/sellers/" + id)
+    }
+
 
     //categories from google maps
     const food_categories = [ 'All', 'American', 'Barbecue', 'Chinese', 'French', 'Hambuger', 'Indian', 'Italian', 'Japanese', 'Mexican', 'Pizza', 'Seafood', 'Steak', 'Sushi', 'Thai']
@@ -51,14 +56,13 @@ function Home() {
                 <div className="browse">
                     {
                         thumbnails.map((seller) => (
-                            <div key={seller.id} className="thumbnail">
+                            <div key={seller.id} id={seller.id} className="thumbnail" onClick={handleNavigate}>
                                 <img src={"images/thumbnails/"+seller.thumbnail} className="thumbnail-img"></img>
                                 <h5 className="display-5">
                                     {seller.name}
-                                    
                                 </h5>
                                 <p className="text-muted"><em>{seller.category}</em></p>
-                                <p>blah blah blah blah blah blah blah blah blah blah blah blah blah blah</p>
+                                <p>{seller.description}</p>
                                 <p><em>{JSON.parse(seller.keywords).keywords.map(word => `${word}, `)}...</em></p>
                             </div>
                         ))
@@ -73,7 +77,7 @@ function Home() {
                                     
                                 </h5>
                                 <p className="text-muted"><em>{seller.category}</em></p>
-                                <p>blah blah blah blah blah blah blah blah blah blah blah blah blah blah</p>
+                                <p>{seller.description}</p>
                                 <p><em>{JSON.parse(seller.keywords).keywords.map(word => `${word}, `)}...</em></p>
                             </div>
                         ))
