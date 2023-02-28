@@ -56,10 +56,16 @@ router.get('/get_user', cors(corsOptions), (req, res) => {
 router.get('/get_featured', cors(corsOptions), (req, res) => {
     let params = req.query;
     let limit = 5;
+    let table_name;
     console.log(params);
+    if(params.mode === 'businesses') {
+        table_name = 'sellers';
+    } else {
+        table_name = 'products';
+    }
     if(params.prefs === 'null') {
         connection.query(
-            `SELECT * FROM sellers ORDER BY RAND() LIMIT ${limit};`, (err, results, fields) => {
+            `SELECT * FROM ${table_name} ORDER BY RAND() LIMIT ${limit};`, (err, results, fields) => {
                 if(err) {
                     console.log(err);
                 }
