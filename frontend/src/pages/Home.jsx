@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-
+import Form from 'react-bootstrap/Form';
+import Collapse from 'react-bootstrap/Collapse';
 
 function Home() {
     const { user, isAuthenticated, loginWithRedirect, isLoading, logout } = useAuth0();
@@ -14,15 +15,21 @@ function Home() {
         "women-owned": false,
         "minority-owned": false,
         "veteran-owned": false,
-        "food": ['All'],
-        "art": ['All'],
-        "music": ['All']
+        "food": ['type-food-all'],
+        "art": ['type-art-all'],
+        "music": ['type-music-all']
     })
     const [thumbnails, setThumbnails] = useState([]);
     const [modal, setModal] = useState(false);
     const [businessBtn, setBusinessBtn] = useState('btn btn-primary');
     const [productBtn, setProductBtn] = useState('btn btn-outline-primary');
-    console.log("updated! " + showing.products)
+    const [filtersOn, setFiltersOn] = useState(false);
+    const [FAM, setFAM] = useState({
+        'type-food': true,
+        'type-art': true,
+        'type-music': true
+    })
+    console.log(filters)
     useEffect(() => {
         console.log("running useeffect again")
         let url;
@@ -60,7 +67,7 @@ function Home() {
         }
     
 
-    }, [isLoading, showing]);
+    }, [showing]);
 
     const handleNavigate = (event) => {
         if(!isAuthenticated) {
@@ -69,7 +76,7 @@ function Home() {
         }
 
         const id = event.currentTarget.id
-        navigate("/sellers/" + id)
+        showing.products ? console.log("need to implement") : navigate("/sellers/" + id)
     }
     const handleModalClose = () => {
         setModal(false);
@@ -90,7 +97,82 @@ function Home() {
             })
         }
     }
+    const handleFilterUpdate = (e) => {
+        const id = e.target.id;
+        const checked = e.target.checked;
+        console.log(checked)
+        if(['type-food', 'type-art', 'type-music'].includes(id)) {
+            setFAM((prev) => {
+                return {...prev, [id]: !FAM[id]}
+            })
+            return;
+        }
+        if(id.includes('type-food')) {
+            setFilters((prev) => {
+                let cur_filters = new Set(prev.food);
+                if(checked) {
+                    cur_filters.add(id);
+                    return {...prev, food: Array.from(cur_filters)}
+                } else {
+                    cur_filters.delete(id);
+                    return {...prev, food: Array.from(cur_filters)}
+                }
+            })
+        }
+        else if(id.includes('type-art')) {
+            setFilters((prev) => {
+                let cur_filters = new Set(prev.food);
+                if(checked) {
+                    cur_filters.add(id);
+                    return {...prev, art: Array.from(cur_filters)}
+                } else {
+                    cur_filters.delete(id);
+                    return {...prev, art: Array.from(cur_filters)}
+                }
+            })
+        }
+        else if(id.includes('type-music')) {
+            setFilters((prev) => {
+                let cur_filters = new Set(prev.food);
+                if(checked) {
+                    cur_filters.add(id);
+                    return {...prev, music: Array.from(cur_filters)}
+                } else {
+                    cur_filters.delete(id);
+                    return {...prev, music: Array.from(cur_filters)}
+                }
+            })
+        }
+        else {
+            setFilters((prev) => {
+                return {...prev,
+                    "women-owned": false,
+                    "minority-owned": false,
+                    "veteran-owned": false,
+                }
+            })
+            setFilters((prev) => {
+                return {...prev, [id]: true}
+            })
+        }
+    }
 
+    const handleFilterReset = (e) => {
+        setFAM({
+            'type-food': true,
+            'type-art': true,
+            'type-music': true
+        })
+        setFilters({
+            "women-owned": true,
+            "minority-owned": true,
+            "veteran-owned": true,
+            "food": ['type-food-all'],
+            "art": ['type-art-all'],
+            "music": ['type-music-all']
+        })
+        setFiltersOn(!filtersOn)
+    }
     //categories from google maps
     const food_categories = [ 'All', 'American', 'Barbecue', 'Chinese', 'French', 'Hambuger', 'Indian', 'Italian', 'Japanese', 'Mexican', 'Pizza', 'Seafood', 'Steak', 'Sushi', 'Thai']
     const art_categories = ['All', 'Sculpture', 'Literature', 'Painting', 'Prints', 'Abstract', 'Other']
@@ -98,6 +180,83 @@ function Home() {
 
     return (
         <div className="container">
+            <div className="row" id="search-bar">
+                <div className="col-4 d-flex">
+                    <Form>
+                        <Form.Control className="inline-form" type="search" placeholder="Search" aria-label="Search"/>
+                    </Form>
+                    <button className="btn btn-outline-success mx-1">Search</button>
+                    <button className="btn btn-info text-white" onClick={() => setFiltersOn(!filtersOn)}>Filters</button>
+                </div>
+                <Collapse in={filtersOn}>
+                    <Form>
+                        <div className="row" id="filters">
+                            <div className="col-3">
+                                    <div key="default-radio">
+                                        <Form.Check name="ownership-filter" type="radio" id="women-owned" label="Woman Owned" onChange={handleFilterUpdate}/>
+                                        <Form.Check name="ownership-filter" type="radio" id="minority-owned" label="Minority Owned" onChange={handleFilterUpdate}/>
+                                        <Form.Check name="ownership-filter" type="radio" id="veteran-owned" label="Veteran Owned" onChange={handleFilterUpdate}/>
+                                    </div>
+                            </div>
+                            <div className="col-2">
+                                    <div className="d-flex">
+                                        <Form.Check type="checkbox" id="type-food" label="Food" defaultChecked={true} onChange={handleFilterUpdate}/>
+                                        <Collapse in={FAM['type-food']}>
+                                            <div className="mx-2">
+                                                <Form.Check type="checkbox" id="type-food-all" label="All" defaultChecked={true} onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-food-american" label="American" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-food-bbq" label="Barbecue" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-food-chinese" label="Chinese" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-food-french" label="French" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-food-burgers" label="Burgers" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-food-indian" label="Indian" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-food-italian" label="Italian" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-food-seafood" label="Seafood" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-food-other" label="Other" onChange={handleFilterUpdate}/>
+                                            </div>
+                                        </Collapse>
+                                    </div>
+                            </div>
+                            <div className="col-2">
+                                    <div className="d-flex">
+                                        <Form.Check type="checkbox" id="type-art" label="Art" defaultChecked={true} onChange={handleFilterUpdate}/>
+                                        <Collapse in={FAM['type-art']}>
+                                            <div className="mx-2">
+                                                <Form.Check type="checkbox" id="type-art-all" label="All" defaultChecked={true}  onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-art-sculpture" label="Sculpture" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-art-literature" label="Literature" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-art-painting" label="Painting" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-art-prints" label="Prints" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-art-abstract" label="Abstract" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-art-other" label="Other" onChange={handleFilterUpdate}/>
+                                            </div>
+                                        </Collapse>
+                                    </div>
+                            </div>
+                            <div className="col-2">
+                                    <div className="d-flex">
+                                        <Form.Check type="checkbox" id="type-music" label="Music" defaultChecked={true} onChange={handleFilterUpdate}/>
+                                        <Collapse in={FAM['type-music']}>
+                                            <div className="mx-2">
+                                                <Form.Check type="checkbox" id="type-music-all" label="All" defaultChecked={true} onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-music-pop" label="Pop" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-music-rock" label="Rock" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-music-hiphop" label="Hip-hop" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-music-jazz" label="Jazz" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-music-rb" label="R&B" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-music-country" label="Country" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-music-electronic" label="Electronic" onChange={handleFilterUpdate}/>
+                                                <Form.Check type="checkbox" id="type-music-other" label="Other" onChange={handleFilterUpdate}/>
+                                            </div>
+                                        </Collapse>
+                                    </div>
+                            </div>
+                            <button className="btn btn-primary"> Update Filters </button>
+                            <button className="btn btn-outline-danger" type="reset" onClick={handleFilterReset}> Cancel </button>
+                        </div>
+                    </Form>
+                </Collapse>
+            </div>
             <div className="row justify-content-center" id="viewmode-toggle">
                 <div className="col-2">
                     <ButtonGroup>

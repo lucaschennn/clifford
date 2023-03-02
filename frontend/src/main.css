@@ -19,7 +19,7 @@
 
 .thumbnail-img {
     height:300px;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 
 .thumbnail:hover {
@@ -39,5 +39,13 @@
 }
 
 #viewmode-toggle {
-    margin-bottom: 5%;
+    margin-bottom: 1%;
+}
+
+.inline-form {
+    display: inline-block;
+}
+
+#search-bar {
+    margin: 1%;
 }
