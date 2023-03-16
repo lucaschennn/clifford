@@ -1,3 +1,5 @@
+@import "bootstrap";
+
 .profile-btn-group {
     margin-top: 1%;
 }
@@ -14,7 +16,13 @@
 
 .thumbnail {
     margin: 1%;
-    transition: all .2s ease-in-out; 
+    transition: all .2s ease-in-out;
+
+    animation: fadeIn 1s;
+}
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
 }
 
 .thumbnail-img {
@@ -46,7 +54,7 @@
     display: inline-block;
 }
 
-#search-bar {
+#filters-drop {
     margin: 1%;
 }
 
@@ -56,4 +64,60 @@
 
 .text-black {
     color: black;
+}
+
+/* remove the default arrow carrot thing from Dropdown.Toggle */
+.dropdown-toggle::after {
+    display: none !important; 
+}
+
+/* overwrite default bootstrap button behavior */
+.btn-primary, .btn-primary:active, .btn-primary:visited {
+    background-color: #8064A2 !important;
+    outline-color: #8064A2 !important;
+    border-color: #8064A2 !important;
+}
+.btn-primary:hover {
+    color: white !important;
+}
+
+.btn-outline-primary, .btn-outline-primary:active, .btn-outline-primary:visited {
+    color: #8064A2 !important;
+    outline-color: #8064A2 !important;
+    border-color: #8064A2 !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: #8064A2 !important;
+    color: white !important;
+}
+
+
+.btn-secondary, .btn-secondary:active, .btn-secondary:visited {
+    background-color: #9DD7F8 !important;
+    outline-color: #9DD7F8 !important;
+    border-color: #9DD7F8 !important;
+}
+.btn-secondary:hover {
+    background-color: #50b7f2 !important;
+    border-color: #50b7f2 !important;
+}
+
+.btn-outline-secondary, .btn-outline-secondary:active, .btn-outline-secondary:visited {
+    color: #9DD7F8 !important;
+    outline-color: #9DD7F8 !important;
+    border-color: #9DD7F8 !important;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #9DD7F8 !important;
+    color: white !important;
+}
+
+#profile-dropdown:hover {
+    color: #333 !important;
+}
+
+#search-btn:hover {
+    background-color: #664e82 !important;
 }

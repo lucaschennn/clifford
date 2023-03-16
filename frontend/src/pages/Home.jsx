@@ -181,9 +181,15 @@ function Home() {
 
     return (
         <div className="container">
-            <div className="row" id="search-bar">
-                <div className="col-4 d-flex">
-                    <button className="btn btn-info text-white" onClick={() => setFiltersOn(!filtersOn)}>Filters</button>
+            <div id="filters-drop">
+                <div className="row justify-content-md-center" id="viewmode-toggle">
+                    <div className="col-md-auto">
+                        <ButtonGroup>
+                            <button id="business-btn" type="button" className={businessBtn} onClick={handleDisplayBtn}>Businesses</button>
+                            <button id="products-btn" type="button" className={productBtn} onClick={handleDisplayBtn}>Products</button>
+                        </ButtonGroup>
+                        <button className="btn btn-secondary dropdown-toggle text-white mx-2" onClick={() => setFiltersOn(!filtersOn)}>Filters</button>
+                    </div>
                 </div>
                 <Collapse in={filtersOn}>
                     <Form>
@@ -253,14 +259,6 @@ function Home() {
                         </div>
                     </Form>
                 </Collapse>
-            </div>
-            <div className="row justify-content-center" id="viewmode-toggle">
-                <div className="col-2">
-                    <ButtonGroup>
-                        <button id="business-btn" type="button" className={businessBtn} onClick={handleDisplayBtn}>Businesses</button>
-                        <button id="products-btn" type="button" className={productBtn} onClick={handleDisplayBtn}>Products</button>
-                    </ButtonGroup>
-                </div>
             </div>
             <div className="row">
                 {!showing.custom_filters ?
