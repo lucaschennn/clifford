@@ -41,8 +41,9 @@ CREATE TABLE IF NOT EXISTS purchases(
 SELECT * FROM users
 
 --@block
-INSERT INTO sellers (owner_id, name, category, keywords, thumbnail)
+INSERT INTO sellers (owner_id, name, category, keywords, thumbnail, description)
 VALUES
+('3', "Modern Photo Gallery", "Art", '{"keywords":["photography", "gallery", "art", "portraits", "still life"]}', "sample_3.jpg", "Modern Photo Gallery is the gallery of a photographer and includes their photographs.")
 
 
 --@block
@@ -54,4 +55,4 @@ VALUES
 ('3', 20.00, "The Zooeys Tee in Pink", "Tasteful. Luxurious. Evergreen. The Classic Zooeys T Shirt.", "4.jpg", 100)
 
 --@block
-SELECT * FROM products
+select * from sellers

@@ -7,6 +7,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
 import Collapse from 'react-bootstrap/Collapse';
 
+
 function Home() {
     const { user, isAuthenticated, loginWithRedirect, isLoading, logout } = useAuth0();
     const navigate = useNavigate();
@@ -182,10 +183,6 @@ function Home() {
         <div className="container">
             <div className="row" id="search-bar">
                 <div className="col-4 d-flex">
-                    <Form>
-                        <Form.Control className="inline-form" type="search" placeholder="Search" aria-label="Search"/>
-                    </Form>
-                    <button className="btn btn-outline-success mx-1">Search</button>
                     <button className="btn btn-info text-white" onClick={() => setFiltersOn(!filtersOn)}>Filters</button>
                 </div>
                 <Collapse in={filtersOn}>
