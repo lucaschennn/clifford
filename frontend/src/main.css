@@ -29,6 +29,10 @@
     height:300px;
     border-radius: 10px;
 }
+.placeholder-img {
+    height:300px;
+    border-radius: 10px; 
+}
 
 .thumbnail:hover {
     z-index: 2;
@@ -79,6 +83,7 @@
 }
 .btn-primary:hover {
     color: white !important;
+    background-color: #664e82 !important;
 }
 
 .btn-outline-primary, .btn-outline-primary:active, .btn-outline-primary:visited {
@@ -120,4 +125,23 @@
 
 #search-btn:hover {
     background-color: #664e82 !important;
+}
+/*
+input.unique-class[type=checkbox],
+input.unique-class[type=radio] {
+    color: #BF3961 !important;
+}
+*/
+
+#dashboard-sidebar {
+    background-color: #434860;
+}
+
+#dashboard-profile-icon {
+    max-width: 50px;
+}
+#dashboard-profile-icon-img {
+    margin: 30%;
+    max-width: 50px;
+    border-radius: 50%;
 }

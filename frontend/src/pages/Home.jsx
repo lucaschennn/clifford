@@ -266,7 +266,9 @@ function Home() {
                     {showing.products?
                         thumbnails.map((product) => (
                             <div key={product.id} id={product.id} className="thumbnail" onClick={handleNavigate}>
-                                <img src={"images/products/"+product.product_url} className="thumbnail-img"></img>
+                                <div className="placeholder-img">
+                                    <img src={"images/products/"+product.product_url} className="thumbnail-img"></img>
+                                </div>
                                 <h5 className="display-5">
                                     {product.name}
                                 </h5>
@@ -278,7 +280,10 @@ function Home() {
                         :
                         thumbnails.map((seller) => (
                             <div key={seller.id} id={seller.id} className="thumbnail" onClick={handleNavigate}>
-                                <img src={"images/thumbnails/"+seller.thumbnail} className="thumbnail-img"></img>
+                                <div className="placeholder-img">
+                                    <img src={"images/thumbnails/"+seller.thumbnail} className="thumbnail-img"></img>
+                                </div>
+
                                 <h5 className="display-5">
                                     {seller.name}
                                 </h5>

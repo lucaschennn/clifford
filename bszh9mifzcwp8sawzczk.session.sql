@@ -55,4 +55,8 @@ VALUES
 ('3', 20.00, "The Zooeys Tee in Pink", "Tasteful. Luxurious. Evergreen. The Classic Zooeys T Shirt.", "4.jpg", 100)
 
 --@block
-select * from sellers
+ALTER TABLE users
+ADD COLUMN profile_url varchar(31);
+
+--@block
+select * from users

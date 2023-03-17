@@ -21,7 +21,7 @@ const NavBar = () => {
 
         </ul>
 
-        <div className="nav abs">
+        <div className="nav abs col-2">
             <SearchBar/>
         </div>
         
@@ -39,7 +39,7 @@ const NavBar = () => {
                                 <NavLink className="nav-link text-black" to="/profile">Profile</NavLink>
                             </Dropdown.Item>
                             <Dropdown.Item>
-                                <NavLink className="nav-link text-black" to="/profile">Business Dashboard</NavLink>
+                                <NavLink className="nav-link text-black" to="/dashboard">Business Dashboard</NavLink>
                             </Dropdown.Item>
                             <Dropdown.Divider />
                             <Dropdown.Item href="#/action-3">
@@ -58,5 +58,6 @@ const NavBar = () => {
       </nav>
     );
 };
+// there is an error with dropdown.item. doesnt impact anything just remove in future
 
 export default NavBar;
