@@ -1,10 +1,10 @@
 import Nav from 'react-bootstrap/Nav';
 
-
 function Dashboard() {
     return (
         <div className="row">
             <div className='col-2' id='dashboard-sidebar'>
+
                 <Nav defaultActiveKey="/home" className="flex-column">
                     <h5 className='m-2'>Dashboard</h5>
                     <div id="dashboard-profile-icon">
@@ -16,7 +16,15 @@ function Dashboard() {
                 </Nav>
             </div>
             <div className='col-4'>
-                sdf
+                <p>asdf</p>
+                <p>asdf</p>
+                <p>asdf</p>
+                <p>asdf</p>
+                <p>asdf</p>
+                <p>asdf</p>
+                <p>asdf</p>
+                <p>asdf</p>
+                <p>asdf</p>
             </div>
 
         </div>

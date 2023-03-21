@@ -133,8 +133,10 @@ input.unique-class[type=radio] {
 }
 */
 
+
 #dashboard-sidebar {
     background-color: #434860;
+    height:100%;
 }
 
 #dashboard-profile-icon {

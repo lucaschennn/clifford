@@ -1,5 +1,5 @@
 //https://hygraph.com/blog/routing-in-react
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { useAuth0 } from "@auth0/auth0-react";
 import Home from './pages/Home'
 import About from './pages/About'
@@ -15,10 +15,13 @@ import NavBar from './NavBar'
 const App = () => {
 
  const { user, isAuthenticated, isLoading } = useAuth0();
+
+ let location = useLocation();
+
  return (
     <>
-      <NavBar />
-      <Routes>
+      {location.pathname != '/dashboard' && <NavBar /> }
+      <Routes history={history}>
          <Route path="/" element={<Home />} />
          <Route path="/about" element={<About />} />
          <Route path="/profile" element={<Profile />} />
