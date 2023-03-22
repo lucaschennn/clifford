@@ -17,7 +17,6 @@
 .thumbnail {
     margin: 1%;
     transition: all .2s ease-in-out;
-
     animation: fadeIn 1s;
 }
 @keyframes fadeIn {
@@ -64,6 +63,13 @@
 
 .clifford-pink {
     background-color: #BF3961;
+}
+
+.text-clifford-blue {
+    color: #9DD7F8;
+}
+.text-clifford-blue:hover {
+    color: #50b7f2;
 }
 
 .text-clifford-pink {
@@ -141,6 +147,9 @@ input.unique-class[type=radio] {
     color: #9DD7F8 !important;
     font-size: 32px !important;
 }
+.clifford-text:hover {
+    color: #50b7f2 !important;
+}
 
 #dashboard-sidebar {
     padding-left: 1%;
@@ -176,4 +185,12 @@ input.unique-class[type=radio] {
     font-size: 18px;
     font-weight: 200;
     margin-left: 10px;
+}
+
+.side-nav-link:hover {
+    color: #696969 !important;
+}
+
+a[disabled] {
+    color: #696969 !important;
 }
