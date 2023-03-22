@@ -38,7 +38,7 @@ const NavBar = () => {
                             <Dropdown.Item href="/profile">
                                 Profile
                             </Dropdown.Item>
-                            <Dropdown.Item href="/dashboard">
+                            <Dropdown.Item href="/dashboard/home">
                                 Business Dashboard
                             </Dropdown.Item>
                             <Dropdown.Divider />

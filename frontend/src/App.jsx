@@ -9,6 +9,7 @@ import Sellers from './pages/Sellers'
 import Dashboard from './pages/Dashboard'
 import Callback from './Callback'
 import NavBar from './NavBar'
+import DashboardNav from './components/dashboardNav'
 
 
 //configure routes
@@ -20,7 +21,7 @@ const App = () => {
 
  return (
     <>
-      {location.pathname != '/dashboard' && <NavBar /> }
+      {location.pathname.includes('/dashboard')? <DashboardNav/> : <NavBar /> }
       <Routes history={history}>
          <Route path="/" element={<Home />} />
          <Route path="/about" element={<About />} />
@@ -28,7 +29,8 @@ const App = () => {
          <Route path="/edit-profile" element={<EditProfile user={user}/>} />
          <Route path="/auth0callback" element={<Callback />} />
          <Route path="/sellers/:id" element={<Sellers/>} />
-         <Route path="/dashboard" element={<Dashboard/>} />
+         <Route path="/dashboard/" element={<Dashboard/>} />
+         <Route path="/dashboard/:page" element={<Dashboard/>} />
       </Routes>
     </>
  )
