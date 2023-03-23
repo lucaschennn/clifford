@@ -59,4 +59,4 @@ ALTER TABLE users
 ADD COLUMN profile_url varchar(31);
 
 --@block
-select * from users
+select * from products
