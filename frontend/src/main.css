@@ -192,5 +192,5 @@ input.unique-class[type=radio] {
 }
 
 a[disabled] {
-    color: #696969 !important;
+    color: #999999 !important;
 }

@@ -136,28 +136,60 @@ router.get('/test', cors(corsOptions), (req, res) => {
     })
 });
 
-router.get('/get_seller/:id', cors(corsOptions), (req, res) => {
-    const id = req.params.id;
-    connection.query(
-        `SELECT * FROM sellers WHERE id="${id}}" LIMIT 1;`, (err, results, fields) => {
-            if(err) {
-                console.log(err);
-            }
-            else {
-                console.log(results)
-                res.json(results)
-            }
+router.get('/get_seller', cors(corsOptions), (req, res) => { //{id: optional, product_id: optional}
 
-        }
-      )
+    if(req.query.id) {
+        const id = req.query.id;
+        connection.query(
+            `SELECT * FROM sellers WHERE id="${id}" LIMIT 1;`, (err, results, fields) => {
+                if(err) {
+                    console.log(err);
+                }
+                else {
+                    console.log(results)
+                    res.json(results)
+                }
+    
+            }
+          )
+    } else {
+        const id = req.query.product_id;
+        connection.query(
+            `SELECT * FROM sellers WHERE product_id=${id} LIMIT 1;`, (err, results, fields) => {
+                if(err) {
+                    console.log(err);
+                }
+                else {
+                    console.log(results)
+                    res.json(results)
+                }
+    
+            }
+          )
+    }
+
 })
 
-router.get('/get_product', cors(corsOptions), (req, res) => { // {seller_id: null, product_id: null, limit: required}
+router.get('/get_product', cors(corsOptions), (req, res) => { // {seller_id: null, product_id: null, limit: required if seller_id}
     if(req.query.seller_id) {
         const id = req.query.seller_id;
         const limit = req.query.limit;
         connection.query(
-            `SELECT * FROM products WHERE business_id="${id}}" LIMIT ${limit};`, (err, results, fields) => {
+            `SELECT * FROM products WHERE business_id="${id}" LIMIT ${limit};`, (err, results, fields) => {
+                if(err) {
+                    console.log(err);
+                }
+                else {
+                    console.log(results)
+                    res.json(results)
+                }
+    
+            }
+          )
+    } else { // must have product_id
+        const id = req.query.product_id;
+        connection.query(
+            `SELECT * FROM products WHERE id="${id}";`, (err, results, fields) => {
                 if(err) {
                     console.log(err);
                 }

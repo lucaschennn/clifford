@@ -77,7 +77,7 @@ function Home() {
         }
 
         const id = event.currentTarget.id
-        showing.products ? console.log("need to implement") : navigate("/sellers/" + id)
+        showing.products ? navigate("/products/" + id) : navigate("/sellers/" + id)
     }
     const handleModalClose = () => {
         setModal(false);

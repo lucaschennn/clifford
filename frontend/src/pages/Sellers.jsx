@@ -6,9 +6,10 @@ function Sellers() {
     const [data, setData] = useState({})
     const [products, setProducts] = useState([])
     
-    
     useEffect(() => {
-        fetch(`http://localhost:5000/api/get_seller/${params.id}`)
+        fetch(`http://localhost:5000/api/get_seller?` + new URLSearchParams({
+            id: params.id,
+        }))
         .then((res) => res.json())
         .then((data) => {
             console.log(data);
