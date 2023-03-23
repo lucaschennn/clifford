@@ -12,6 +12,7 @@ function Products() {
         thumbnail: 'sample_1.jpg',
         name: 'Loading'
     }]);
+    const [btnText, setBtnText] = useState("Add to Cart");
     
     useEffect(() => {
 
@@ -38,6 +39,14 @@ function Products() {
         })
     }, [])
 
+    const onBtnHover = () => {
+        setBtnText(`$${products[0].price}`);
+    }
+
+    const onBtnLeave = () => {
+        setBtnText("Add to cart");
+    }
+
     return (
         <div className="container">
             <div className="row">
@@ -56,9 +65,7 @@ function Products() {
                 </div>
                 <div className='col-4' id="product-description">
                     <div className="description-seller">
-                        <div className="profile-img">
-                            <img src={"../images/thumbnails/"+seller[0].thumbnail} className="fit-profile-img"></img>
-                        </div>
+                        <img src={"../images/thumbnails/"+seller[0].thumbnail} className="fit-profile-img"></img>
                         <h4 className="display-5 inline-header">{seller[0].name}</h4>
                     </div>
                     <div className="description-body">
@@ -68,6 +75,9 @@ function Products() {
                         <p>
                             {products[0].description}
                         </p>
+                    </div>
+                    <div className="description-purchase">
+                        <button className="btn btn-primary fadein" id="purchase-btn" onMouseEnter={onBtnHover} onMouseLeave={onBtnLeave}>{btnText}</button>
                     </div>
                 </div>
             </div>

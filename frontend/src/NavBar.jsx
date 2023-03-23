@@ -9,7 +9,7 @@ const NavBar = () => {
     const { user, loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
     return (
-      <nav className="navbar clifford-pink">
+      <nav className="navbar clifford-pink" id="main-nav">
 
         <ul className="nav">
             <li className="nav-item">

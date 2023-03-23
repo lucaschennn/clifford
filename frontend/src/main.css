@@ -226,16 +226,32 @@ a[disabled] {
     width: 70px;
     height: 70px;
     border-radius:50%;
-    display: inline;
+}
+
+.description-seller {
+    margin-bottom: 10px;
 }
 
 .fit-profile-img {
     width: 70px;
     height: 70px;
     border-radius:50%;
+    margin-right: 10px;
+    vertical-align: bottom;
     object-fit: cover;
 }
 
 .inline-header {
     display: inline;
+}
+
+#main-nav {
+    border-bottom: solid 5px #9DD7F8;
+}
+
+#purchase-btn {
+    width: 150px;
+    height: 50px;
+    transition: all .2s ease-in-out;
+    animation: fadeIn 1s;
 }
