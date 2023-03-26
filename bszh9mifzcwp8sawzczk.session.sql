@@ -56,7 +56,10 @@ VALUES
 
 --@block
 ALTER TABLE users
-ADD COLUMN profile_url varchar(31);
+ADD COLUMN cart json;
+
 
 --@block
 select * from products
+
+

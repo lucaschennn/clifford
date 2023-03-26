@@ -72,6 +72,9 @@ function Products() {
                         <h3>
                             {products[0].name}
                         </h3>
+                        <h5 className="display-5 price-text">
+                            {products[0].price == 0? "Free" : `$${products[0].price}`}
+                        </h5>
                         <p>
                             {products[0].description}
                         </p>

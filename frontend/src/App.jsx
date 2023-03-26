@@ -8,6 +8,7 @@ import EditProfile from './pages/edit-profile'
 import Sellers from './pages/Sellers'
 import Products from './pages/Products'
 import Dashboard from './pages/Dashboard'
+import Checkout from './pages/Checkout'
 import Callback from './Callback'
 import NavBar from './NavBar'
 import DashboardNav from './components/dashboardNav'
@@ -33,6 +34,7 @@ const App = () => {
          <Route path="/products/:id" element={<Products/>} />
          <Route path="/dashboard/" element={<Dashboard/>} />
          <Route path="/dashboard/:page" element={<Dashboard/>} />
+         <Route path="/checkout" element={<Checkout/>} />
       </Routes>
     </>
  )

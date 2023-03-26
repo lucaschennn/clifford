@@ -255,3 +255,7 @@ a[disabled] {
     transition: all .2s ease-in-out;
     animation: fadeIn 1s;
 }
+
+.price-text {
+    font-size: 32px;
+}

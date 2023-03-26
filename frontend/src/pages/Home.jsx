@@ -9,6 +9,10 @@ import Collapse from 'react-bootstrap/Collapse';
 
 
 function Home() {
+
+    const urlParams = new URLSearchParams(location.search);
+    const checkout_res = urlParams.get('success');
+    console.log("checkout_res: " + checkout_res);
     const { user, isAuthenticated, loginWithRedirect, isLoading, logout } = useAuth0();
     const navigate = useNavigate();
     const [showing, setShowing] = useState({custom_filters: false, products: false}) // featured or custom filters, sellers or products
@@ -30,7 +34,6 @@ function Home() {
         'type-art': true,
         'type-music': true
     })
-    console.log(filters)
     useEffect(() => {
         console.log("running useeffect again")
         let url;

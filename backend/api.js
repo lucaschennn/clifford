@@ -1,4 +1,8 @@
+//https://stripe.com/docs/development/quickstart?lang=node
+//step 3 run your first SDK request
+
 const mysql = require('mysql')
+const stripe = require('stripe')('sk_test_51MpOudGm81VMr6VhZ9p5XpJoWWy9FpfibFTwrvZkKr0GNhXcvozsT8xWLuWw2OoLgw19jw5S7Dp8bjMcut8wSZqO005jRPIm6G');
 var express = require('express');
 var cors = require('cors')
 var axios = require('axios')
@@ -207,6 +211,25 @@ router.get('/insert/user', cors(corsOptions), (req, res) => {
     //params: {email: email, username: username, prefs,{}}
     //db.insert(users, params) table, to insert (in json)
     console.log("success")
+})
+
+router.post('/create-checkout-session', cors(corsOptions), async (req, res) => {
+    console.log("create-checkout-session hit")
+    const session = await stripe.checkout.sessions.create({
+        line_items: [
+            {
+                //carrots!
+                price: 'price_1MpiRwGm81VMr6VhgQOzmemh',
+                quantity: 1,
+            },
+        ],
+        mode: 'payment',
+        //only instance i think i have of hardcoding frontend domain, should change in future
+        success_url: 'http://127.0.0.1:5173?success=true',
+        cancel_url: 'http://127.0.0.1:5173?success=false',
+    })
+
+    res.redirect(303, session.url);
 })
 
 //connection.end();
