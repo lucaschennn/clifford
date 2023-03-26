@@ -6,17 +6,13 @@ const Profile = () => {
   const { user, isAuthenticated, isLoading, logout, getAccessTokenSilently } = useAuth0();
   const navigate = useNavigate();
 
-  if (isLoading) {
-    return <div>Loading ...</div>;
-  }
 
   const handleRedirect = (event) => {
     // stop browser from changing the URL and requesting the new page
     navigate('/edit-profile')
   }
 
-  console.log(user);
-  console.log(user.id);
+  //console.log(user);
 
   return (
     isAuthenticated && (
