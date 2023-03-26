@@ -11,7 +11,7 @@ function Dashboard() {
     return ( isAuthenticated &&
         <div className="row w-100">
             <div className='col-8' id='dashboard-content'>
-                <h4 className="text-clifford-pink"> Welcome back, {user.name}!</h4>
+                <h4 className="text-clifford-pink"> Welcome back, {user.nickname}!</h4>
                 <h5 className="text-muted" id="date-string">{date.toDateString()}</h5>
             </div>
         </div>
