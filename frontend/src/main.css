@@ -259,3 +259,7 @@ a[disabled] {
 .price-text {
     font-size: 32px;
 }
+
+.nav-link:focus {
+    color:#50b7f2;
+}

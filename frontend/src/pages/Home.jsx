@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
 import Collapse from 'react-bootstrap/Collapse';
+import Alert from 'react-bootstrap/Alert';
 
 
 function Home() {
@@ -34,6 +35,11 @@ function Home() {
         'type-art': true,
         'type-music': true
     })
+    const [checkoutSuccess, setCheckoutSuccess] = useState(null);
+    useEffect(() => {
+        console.log("USEEFFECT: " + checkout_res);
+        setCheckoutSuccess(checkout_res);
+    }, [checkout_res])
     useEffect(() => {
         console.log("running useeffect again")
         let url;
@@ -184,6 +190,16 @@ function Home() {
 
     return (
         <div className="container">
+            {checkoutSuccess == "true" &&
+              <Alert bsStyle="warning" onClose = {() => setCheckoutSuccess(null) } dismissible>
+                Thank you for your purchase!!
+              </Alert>
+            }
+            {checkoutSuccess == "false" &&
+              <Alert bsStyle="warning" onClose = {() => setCheckoutSuccess(null) } dismissible>
+                Purchase cancelled.
+              </Alert>
+            }
             <div id="filters-drop">
                 <div className="row justify-content-md-center" id="viewmode-toggle">
                     <div className="col-md-auto">
