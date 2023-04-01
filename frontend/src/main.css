@@ -264,3 +264,15 @@ a[disabled] {
     color:#cccccc;
     font-weight: 500;
 }
+
+#bad-search {
+    position: fixed;
+    text-align: center;
+    top: 50%;
+    left: 45%;
+}
+
+#cancel-search {
+    font-size: .5rem;
+    line-height: 3;
+}

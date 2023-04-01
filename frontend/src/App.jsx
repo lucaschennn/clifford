@@ -26,6 +26,7 @@ const App = () => {
       {location.pathname.includes('/dashboard')? <DashboardNav/> : <NavBar /> }
       <Routes history={history}>
          <Route path="/" element={<Home />} />
+         <Route path="/search/:query" element={<Home />} />
          <Route path="/about" element={<About />} />
          <Route path="/profile" element={<Profile />} />
          <Route path="/edit-profile" element={<EditProfile user={user}/>} />
