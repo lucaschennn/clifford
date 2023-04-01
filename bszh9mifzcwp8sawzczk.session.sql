@@ -60,6 +60,6 @@ ADD COLUMN cart json;
 
 
 --@block
-select * from products
+select * from sellers
 
 

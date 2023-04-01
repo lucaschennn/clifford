@@ -203,7 +203,7 @@ router.get('/get_product', cors(corsOptions), (req, res) => { // {seller_id: nul
                 }
     
             }
-          )
+        )
     }
 })
 
@@ -230,6 +230,48 @@ router.post('/create-checkout-session', cors(corsOptions), async (req, res) => {
     })
 
     res.redirect(303, session.url);
+})
+
+router.get('/search', cors(corsOptions), (req, res) => { //{query: query, products?: true/false, }
+    const products = req.query.products;
+    const query = req.query.query;
+    console.log("Search query: " + query);
+    const limit = 10;
+    if(products === "true") { // business_id LIKE "%${query}%" OR 
+        connection.query(
+            `SELECT * FROM products WHERE
+            name like "%${query}%" OR
+            description like "%${query}%"
+            LIMIT ${limit};`, (err, results, fields) => {
+                if(err) {
+                    console.log(err);
+                }
+                else {
+                    console.log(results)
+                    res.json(results)
+                }
+    
+            }
+          )
+    } else {
+        connection.query(
+            `SELECT * FROM sellers WHERE keywords LIKE "%${query}%" OR 
+            name like "%${query}%" OR
+            description like "%${query}%" OR
+            category like "%${query}%"
+            LIMIT ${limit};`, (err, results, fields) => {
+                if(err) {
+                    console.log(err);
+                }
+                else {
+                    console.log(results)
+                    res.json(results)
+                }
+    
+            }
+          )
+    }
+
 })
 
 //connection.end();

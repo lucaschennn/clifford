@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -13,7 +13,9 @@ function Home() {
 
     const urlParams = new URLSearchParams(location.search);
     const checkout_res = urlParams.get('success');
-    console.log("checkout_res: " + checkout_res);
+
+    let params = useParams();
+
     const { user, isAuthenticated, loginWithRedirect, isLoading, logout } = useAuth0();
     const navigate = useNavigate();
     const [showing, setShowing] = useState({custom_filters: false, products: false}) // featured or custom filters, sellers or products
@@ -49,8 +51,19 @@ function Home() {
         else {
             url = 'http://localhost:5000/api/get_featured?mode=products&'
         }
-
-        if(isAuthenticated) { // looking at featured
+        console.log("showing products" + showing.products);
+        if(params.query) { // there is a search
+            fetch('http://localhost:5000/api/search?' + new URLSearchParams({
+                query: params.query,
+                products: showing.products
+             }))
+             .then(response => response.json())
+             .then((data) => {
+                 console.log(data);
+                 setThumbnails(data);
+             })
+        }
+        else if(isAuthenticated) { // looking at featured
             fetch('http://localhost:5000/api/get_user?' + new URLSearchParams({
                 email: user.email
             }))
@@ -61,7 +74,7 @@ function Home() {
                 .then((data) => {
                     console.log(data)
                     setThumbnails(data)
-                    console.log(thumbnails);
+                    //console.log(thumbnails);
                 })        
             })
         }
@@ -77,7 +90,7 @@ function Home() {
         }
     
 
-    }, [showing]);
+    }, [showing, params, showing.products]);
 
     const handleNavigate = (event) => {
         if(!isAuthenticated) {
@@ -195,11 +208,6 @@ function Home() {
                 Thank you for your purchase!!
               </Alert>
             }
-            {checkoutSuccess == "false" &&
-              <Alert bsStyle="warning" onClose = {() => setCheckoutSuccess(null) } dismissible>
-                Purchase cancelled.
-              </Alert>
-            }
             <div id="filters-drop">
                 <div className="row justify-content-md-center" id="viewmode-toggle">
                     <div className="col-md-auto">
@@ -282,39 +290,49 @@ function Home() {
             <div className="row">
                 {!showing.custom_filters ?
                 <div className="browse">
-                    {showing.products?
-                        thumbnails.map((product) => (
-                            <div key={product.id} id={product.id} className="thumbnail" onClick={handleNavigate}>
-                                <div className="placeholder-img">
-                                    <img src={"images/products/"+product.product_url} className="thumbnail-img"></img>
+                    {thumbnails.length === 0 ?
+                    <div id="bad-search">
+                        nothing to display
+                    </div>
+                    :
+                    <>
+                        {showing.products?
+                            thumbnails.map((product) => (
+                                <div key={product.id} id={product.id} className="thumbnail" onClick={handleNavigate}>
+                                    <div className="placeholder-img">
+                                        <img src={"http://127.0.0.1:5173/images/products/"+product.product_url} className="thumbnail-img"></img>
+                                    </div>
+                                    <h5 className="display-5">
+                                        {product.name}
+                                    </h5>
+                                    <p className="text-muted"><em>{product.price ? '$' + product.price : "Free"}</em></p>
+                                    <p>{product.description}</p>
                                 </div>
-                                <h5 className="display-5">
-                                    {product.name}
-                                </h5>
-                                <p className="text-muted"><em>{product.price ? '$' + product.price : "Free"}</em></p>
-                                <p>{product.description}</p>
-                            </div>
-                        ))
+                            ))
 
-                        :
-                        thumbnails.map((seller) => (
-                            <div key={seller.id} id={seller.id} className="thumbnail" onClick={handleNavigate}>
-                                <div className="placeholder-img">
-                                    <img src={"images/thumbnails/"+seller.thumbnail} className="thumbnail-img"></img>
+                            :
+                            thumbnails.map((seller) => (
+                                <div key={seller.id} id={seller.id} className="thumbnail" onClick={handleNavigate}>
+                                    <div className="placeholder-img">
+                                        <img src={"http://127.0.0.1:5173/images/thumbnails/"+seller.thumbnail} className="thumbnail-img"></img>
+                                    </div>
+
+                                    <h5 className="display-5">
+                                        {seller.name}
+                                    </h5>
+                                    <p className="text-muted"><em>{seller.category}</em></p>
+                                    <p>{seller.description}</p>
+                                    {
+                                        seller.keywords &&
+                                        <p><em>{JSON.parse(seller.keywords).keywords.map(word => `${word}, `)}...</em></p>
+                                    }
                                 </div>
+                            ))
+                        }
+                    </>
+                
+                }
 
-                                <h5 className="display-5">
-                                    {seller.name}
-                                </h5>
-                                <p className="text-muted"><em>{seller.category}</em></p>
-                                <p>{seller.description}</p>
-                                {
-                                    seller.keywords &&
-                                    <p><em>{JSON.parse(seller.keywords).keywords.map(word => `${word}, `)}...</em></p>
-                                }
-                            </div>
-                        ))
-                    }
                     
                 </div>
                 :
