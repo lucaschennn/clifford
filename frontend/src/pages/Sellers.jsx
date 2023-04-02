@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Sellers() {
     let params = useParams();
+    const navigate = useNavigate();
     const [data, setData] = useState({})
     const [products, setProducts] = useState([])
     
@@ -26,6 +27,10 @@ function Sellers() {
         })
     }, [])
 
+    const handleNavigate = (id) => {
+        navigate('/products/' + id)
+    }
+
     return (
         <div className="container seller-profile">
             <div className="row">
@@ -39,7 +44,7 @@ function Sellers() {
                     {
                         products.map((product) => (
                             <div key={product.id} id={product.id} className="thumbnail">
-                                <img src={"../images/products/"+product.product_url} className="thumbnail-img"></img>
+                                <img src={"../images/products/"+product.product_url} className="thumbnail-img" onClick={() => handleNavigate(product.id)}></img>
                                 <h5 className="display-5">
                                     {product.name}
                                 </h5>
