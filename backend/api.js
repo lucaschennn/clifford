@@ -75,7 +75,7 @@ router.get('/get_featured', cors(corsOptions), (req, res) => {
     }
     if(params.prefs === 'null') {
         connection.query(
-            `SELECT * FROM ${table_name} ORDER BY RAND() LIMIT ${limit};`, (err, results, fields) => {
+            `SELECT * FROM ${table_name} LIMIT ${limit};`, (err, results, fields) => {
                 if(err) {
                     console.log(err);
                 }

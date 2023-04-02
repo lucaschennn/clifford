@@ -68,6 +68,6 @@ WHERE id=4
 
 
 --@block
-select * from products
+select * from users
 
 

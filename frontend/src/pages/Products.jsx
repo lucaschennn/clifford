@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-
+import Alert from 'react-bootstrap/Alert';
 
 
 function Products() {
@@ -18,6 +18,7 @@ function Products() {
     const [btnText, setBtnText] = useState("Add to Cart");
     const [id, setId] = useState(-1);
     const { user, isAuthenticated, isLoading } = useAuth0();
+    const [ alert, setAlert ] = useState(false)
     
     useEffect(() => {
 
@@ -73,12 +74,21 @@ function Products() {
             }
         })
         .then(response => response.json())
-        .then(data => console.log(data));
+        .then(data => {
+            if(data.status === 'success') {
+                setAlert(true);
+            }
+        });
     }
 
     return (
         isAuthenticated &&
         <div className="container">
+            {alert &&
+              <Alert onClose = {() => setAlert(false) } dismissible>
+                Item successfully added to cart!
+              </Alert>
+            }
             <div className="row">
                 <div className="col-2">
                     <div className="alt-img">
