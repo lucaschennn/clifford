@@ -12,7 +12,7 @@ const Profile = () => {
     navigate('/edit-profile')
   }
 
-  //console.log(user);
+  console.log(user);
 
   return (
     isAuthenticated && (

@@ -12,7 +12,7 @@ git clone https://github.com/lucaschennn/clifford.git
 ```
 3. When adding a feature, remember to ```git branch <new-branch-name>```
 4. To run the app, you will need to run a development server for both the frontend and backend. Have two terminals open and cd into ./frontend and ./backend and type ```npm run dev``` for both.
-5. Navigate to [127.0.0.1:5173](127.0.0.1:5173) in your web browser
+5. Navigate to [127.0.0.1:5173](http://127.0.0.1:5173) in your web browser
 
 ### Project Structure
 The project is divided into /frontend and /backend.

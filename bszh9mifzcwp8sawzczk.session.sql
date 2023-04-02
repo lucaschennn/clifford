@@ -60,6 +60,14 @@ ADD COLUMN cart json;
 
 
 --@block
-select * from sellers
+UPDATE products
+SET
+product_id = "prod_Nda0Y51pCoDZqf",
+price_id = "price_1MsIqyGm81VMr6VhCkBaoNqR"
+WHERE id=4
+
+
+--@block
+select * from products
 
 

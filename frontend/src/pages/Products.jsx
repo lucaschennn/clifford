@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+
+
 
 function Products() {
     let params = useParams();
@@ -13,6 +16,8 @@ function Products() {
         name: 'Loading'
     }]);
     const [btnText, setBtnText] = useState("Add to Cart");
+    const [id, setId] = useState(-1);
+    const { user, isAuthenticated, isLoading } = useAuth0();
     
     useEffect(() => {
 
@@ -38,6 +43,18 @@ function Products() {
             })
         })
     }, [])
+    useEffect(() => {
+        if(!isLoading) {
+            fetch('http://localhost:5000/api/get_user?' + new URLSearchParams({
+                email: user.email
+            }))
+            .then((res) => res.json())
+            .then((data) => {
+                setId(data.id);
+            })
+        }
+
+    }, [isLoading]);
 
     const onBtnHover = () => {
         setBtnText(`$${products[0].price}`);
@@ -47,7 +64,20 @@ function Products() {
         setBtnText("Add to cart");
     }
 
+    const handleCartBtn = async (e) => {
+        fetch('http://localhost:5000/api/update_cart', {
+            method: 'POST',
+            body: JSON.stringify({userid: id, productid: products[0].id}),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => console.log(data));
+    }
+
     return (
+        isAuthenticated &&
         <div className="container">
             <div className="row">
                 <div className="col-2">
@@ -80,7 +110,7 @@ function Products() {
                         </p>
                     </div>
                     <div className="description-purchase">
-                        <button className="btn btn-primary fadein" id="purchase-btn" onMouseEnter={onBtnHover} onMouseLeave={onBtnLeave}>{btnText}</button>
+                        <button className="btn btn-primary fadein" id="purchase-btn" onClick={handleCartBtn} onMouseEnter={onBtnHover} onMouseLeave={onBtnLeave}>{btnText}</button>
                     </div>
                 </div>
             </div>
