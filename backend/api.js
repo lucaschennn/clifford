@@ -4,6 +4,7 @@
 const mysql = require('mysql')
 const stripe = require('stripe')('sk_test_51MpOudGm81VMr6VhZ9p5XpJoWWy9FpfibFTwrvZkKr0GNhXcvozsT8xWLuWw2OoLgw19jw5S7Dp8bjMcut8wSZqO005jRPIm6G');
 var express = require('express');
+const bodyParser = require('body-parser');
 var cors = require('cors')
 var axios = require('axios')
 
@@ -11,6 +12,9 @@ const { auth } = require('express-oauth2-jwt-bearer')
 
 
 var router = express.Router();
+router.use(bodyParser.json());
+
+
 
 const connection = mysql.createConnection({
     host: 'bszh9mifzcwp8sawzczk-mysql.services.clever-cloud.com',
@@ -25,8 +29,10 @@ const corsOptions = {
     origin: 'http://127.0.0.1:5173',
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
+    allowedHeaders: 'Content-Type,Authorization',
     optionsSuccessStatus: 200
 }
+router.use(cors(corsOptions));
 const checkJwt = auth({
     audience: 'http://localhost:5000',
     issuerBaseURL: corsOptions.origin,
@@ -49,7 +55,7 @@ router.get('/get_user', cors(corsOptions), (req, res) => {
             }
             else {
                 console.log(results)
-                res.json({"nickname": results[0].nickname, "email": results[0].email, "prefs": results[0].prefs})
+                res.json({"id": results[0].id, "nickname": results[0].nickname, "email": results[0].email, "prefs": results[0].prefs})
             }
 
         }
@@ -272,6 +278,41 @@ router.get('/search', cors(corsOptions), (req, res) => { //{query: query, produc
           )
     }
 
+})
+
+router.post('/update_cart', cors(corsOptions), (req, res) => {
+    const uid = req.body.userid;
+    const pid = req.body.productid.toString();
+    connection.query(
+        `SELECT cart FROM users WHERE id=${uid}
+        LIMIT 1;`, (err, results, fields) => {
+            if(err) {
+                console.log(err);
+            }
+            else {
+                let cart;
+                //console.log(results[0].cart)
+                if(results[0].cart === undefined || results[0].cart === null) { //cart -> {item1: q1, item2: q2, ...}
+                    cart = {};
+                    cart[pid] = "1";
+                } else {
+                    cart = JSON.parse(results[0].cart);
+                    cart.hasOwnProperty(pid) ? cart[pid] = (parseInt(cart[pid]) + 1).toString() : cart[pid] = "1"
+                }
+                connection.query(
+                    `UPDATE users SET cart='${JSON.stringify(cart)}' WHERE id=${uid};`, (err, results, fields) => {
+                        if(err) {
+                            console.log(err);
+                        }
+                        else {
+                            res.json({status: "success"})
+                        }
+                    }
+                )
+            }
+
+        }
+    )
 })
 
 //connection.end();

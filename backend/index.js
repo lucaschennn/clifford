@@ -11,6 +11,7 @@ const app = express();
 
 
 app.use('/api', api);
+
 //app.use(cors())
 
 app.listen(5000, () => {
