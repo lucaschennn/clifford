@@ -315,5 +315,37 @@ router.post('/update_cart', cors(corsOptions), (req, res) => {
     )
 })
 
+router.get('/get_cart', cors(corsOptions), (req, res) => {
+    let id = req.query.id;
+    connection.query(
+        `SELECT cart FROM users WHERE
+        id=${id}`, (err, results, fields) => {
+            if(err) {
+                console.log(err);
+            }
+            else {
+                let cart = JSON.parse(results[0].cart);
+                const keys = Object.keys(cart);
+                const query = "SELECT * FROM products WHERE id IN (?)"
+
+                connection.query(query, [keys], (err, results, fiels) => {
+                    if(err) {
+                        console.log(err);
+                    }
+                    else {
+                        const out = results.map(prod => {
+                            let prod_id = prod.id;
+                            return [prod, cart[prod_id]]
+                        })
+                        console.log(out);
+                        res.json(out);
+                    }
+                })
+            }
+
+        }
+      )
+})
+
 //connection.end();
 module.exports = router;
