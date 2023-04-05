@@ -290,3 +290,18 @@ a[disabled] {
     margin-bottom: 50px;
     margin-top: 50px;
 }
+
+.fit-profile-img-checkout {
+    width: 30px;
+    height: 30px;
+    border-radius:50%;
+    margin-right: 10px;
+    vertical-align: bottom;
+    object-fit: cover;
+}
+
+.inline-header-checkout {
+    display: inline;
+    color: grey;
+    font-size: 16pt;
+}

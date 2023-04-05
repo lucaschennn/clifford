@@ -58,7 +58,7 @@ export default function Checkout() {
     <Message message={message} />
   ) : ( isAuthenticated &&
     <>
-    <div class="container">
+    <div className="container">
       {cart.map((product, index) => (
       <div className="row cart-entry" key={product[0].id}>
         <div className="col-2">
@@ -69,6 +69,8 @@ export default function Checkout() {
         <div className="col-4">
           <div className="checkout-header">
             <h2 className="font-weight-bold">{product[0].name}</h2>
+            <img src={"../images/thumbnails/"+product[0].business_id.thumbnail} className="fit-profile-img-checkout"></img>
+            <h4 className="inline-header-checkout">{product[0].business_id.name}</h4>
             <p>{product[0].description}</p>
           </div>
         </div>

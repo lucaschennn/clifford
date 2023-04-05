@@ -75,7 +75,7 @@ router.get('/get_featured', cors(corsOptions), (req, res) => {
     }
     if(params.prefs === 'null') {
         connection.query(
-            `SELECT * FROM ${table_name} LIMIT ${limit};`, (err, results, fields) => {
+            `SELECT * FROM ${table_name} ORDER BY RAND() LIMIT ${limit};`, (err, results, fields) => {
                 if(err) {
                     console.log(err);
                 }
@@ -328,17 +328,53 @@ router.get('/get_cart', cors(corsOptions), (req, res) => {
                 const keys = Object.keys(cart);
                 const query = "SELECT * FROM products WHERE id IN (?)"
 
-                connection.query(query, [keys], (err, results, fiels) => {
+                connection.query(query, [keys], (err, results, fields) => {
                     if(err) {
                         console.log(err);
                     }
                     else {
+                        Promise.all(results.map(prod => {
+                            let prod_id = prod.id;
+                            const bus_id = prod.business_id;
+                            return new Promise((resolve, reject) => {
+                                connection.query(`SELECT name, thumbnail FROM sellers WHERE id=${bus_id}`, (err, results, fiels) => {
+                                    if(err) {
+                                        console.log(err);
+                                        reject(err);
+                                    }
+                                    else {
+                                        prod.business_id = results[0]
+                                        //console.log(prod)
+                                        resolve([prod, cart[prod_id]]);
+                                    }
+                                })
+                            })
+                        }))
+                        .then(results => {
+                            console.log(results);
+                            res.json(results);
+                        }).catch(err => {
+                            console.error(err);
+                        })
+/*
                         const out = results.map(prod => {
                             let prod_id = prod.id;
-                            return [prod, cart[prod_id]]
+                            const bus_id = prod.business_id;
+                            connection.query(`SELECT name, thumbnail FROM sellers WHERE id=${bus_id}`, (err, results, fiels) => {
+                                if(err) {
+                                    console.log(err);
+                                }
+                                else {
+                                    prod.business_id = results[0]
+                                    //console.log(prod)
+                                    return [prod, cart[prod_id]]
+                                }
+                            })
+                            //return [prod, cart[prod_id]]
                         })
                         console.log(out);
                         res.json(out);
+                        */
                     }
                 })
             }
