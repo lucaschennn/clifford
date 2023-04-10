@@ -21,7 +21,7 @@ function DashboardHome() {
         'beepboop left a review on your listing: ___',
         'another line here'];
 
-    return (
+    return (  isAuthenticated && 
         <div className="row w-100">
             <div className='col-8' id='dashboard-content'>
                 <h4 className="text-clifford-pink"> Welcome back, {user.nickname}!</h4>
