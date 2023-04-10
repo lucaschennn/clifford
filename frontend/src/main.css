@@ -73,6 +73,8 @@
 }
 
 .text-clifford-pink {
+    font-weight: bold;
+    font-size: 30px;
     color: #BF3961;
 }
 
@@ -152,11 +154,15 @@ input.unique-class[type=radio] {
 }
 
 #dashboard-sidebar {
-    padding-left: 1%;
+    padding-top: 30px;
+    padding-left: 2%;
     background-color: #434860;
     height:100%;
     width:200px;
     left: 0;
+    line-height: 200%;
+    text-align: center;
+    font-weight: bold;
     position:fixed;
     border-right: solid 10px #9DD7F8;
 }
@@ -167,15 +173,17 @@ input.unique-class[type=radio] {
 
 #dashboard-profile-icon {
     position: relative;
+    margin-top: 30px;
+    margin-bottom: 30px;
     border-radius: 50%;
-    height: 50px;
-    width: 50px;
-    left: 43%;
+    height: 75px;
+    width: 75px;
+    left: 20%;
     background-color: #999999;
 }
 
 #dashboard-content {
-    margin-left: 10px;
+    margin-left: 50px;
     margin-top: 3%;
     position: relative;
     left: 200px;
@@ -188,17 +196,92 @@ input.unique-class[type=radio] {
 }
 
 .side-nav-link:hover {
-    color: #696969 !important;
+    color: #E3B2C1 !important;
 }
 
 a[disabled] {
     color: #999999 !important;
 }
 
+#update-box {
+    margin-top: 40px;
+    width: 412px;
+    height: 361px;
+    border-radius: 15px;
+    background-color: #D9D9D9;
+}
+
+#update-box-header {
+    background-color: #BF3961;
+    width: 412px;
+    height: 100px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    position: absolute;
+    color: #eeeeee;
+    text-align: center;
+    font-weight: bold;
+    font-size: 25px;
+    padding: 30px;
+}
+
+#update-box-list {
+    font-size: 18px;
+    font-weight: 300;
+    padding-top: 150px;
+    margin-left: 10px;
+
+
+    list-style: none;
+    padding-left: 10px;
+
+    text-align: left;
+    line-height: 20px;
+
+    overflow: scroll;
+}
+
+#update-boxes-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#recent-activity-text {
+    padding-top: 30px;
+    padding-bottom: 50px;
+    font-size: 18px;
+    font-weight: 300;
+
+    list-style: none;
+}
+
+#my-listings-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+#my-listing {
+    margin-top: 13px;
+    width: 320px;
+    height: 350px;
+    border-radius: 20px;
+    background-color: #999999; 
+}
+
+#listing-title {
+    padding-top: 20px;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+#edit-listing {
+    text-decoration: underline;
+}
+
 .alt-img {
     margin-top: 13px;
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     border-radius: 20px;
     background-color: #999999;
 }
