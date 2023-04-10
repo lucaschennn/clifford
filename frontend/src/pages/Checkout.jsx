@@ -18,6 +18,8 @@ export default function Checkout() {
   const [cart, setCart] = useState([]);
   const { user, isAuthenticated, isLoading } = useAuth0();
 
+  console.log(cart);
+
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
     const query = new URLSearchParams(window.location.search);
@@ -53,6 +55,25 @@ export default function Checkout() {
     }
   }, [isLoading])
 
+  const incrementItem = (e) => {
+    const idx = e.target.value;
+    setCart((prev) => {
+      let newItems = prev;
+      newItems[idx][1] = (Number(newItems[idx][1]) + 1).toString();
+      return newItems
+    });
+  }
+  const decrementItem = (e) => {
+    const idx = e.target.value;
+    setCart((prev) => {
+      let newItems = prev;
+      newItems[idx][1] = (Number(newItems[idx][1]) - 1).toString();
+      if(Number(newItems[idx][1]) < 0) {
+        newItems[idx][1] = '1';
+      }
+      return newItems
+    });
+  }
 
   return message ? (
     <Message message={message} />
@@ -83,12 +104,12 @@ export default function Checkout() {
               <FormControl
                 type="text"
                 value={product[1]}
-                onChange={(e) => setValue(e.target.value)}
+                onChange={(e) => setCart(e.target.value)}
               />
-              <Button variant="outline-secondary" onClick={() => console.log(hi)}>
+              <Button variant="outline-secondary" onClick={decrementItem} value={index}>
                 -
               </Button>
-              <Button variant="outline-secondary" onClick={() => console.log(hi)}>
+              <Button variant="outline-secondary" onClick={incrementItem} value={index}>
                 +
               </Button>
             </InputGroup>
@@ -101,7 +122,7 @@ export default function Checkout() {
       </div>
       ))}
       <form action="http://localhost:5000/api/create-checkout-session" method="POST">
-        <button type="submit">
+        <button className = "btn btn-primary" type="submit">
           Checkout
         </button>
       </form>
