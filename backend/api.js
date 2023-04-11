@@ -75,7 +75,7 @@ router.get('/get_featured', cors(corsOptions), (req, res) => {
     }
     if(params.prefs === 'null') {
         connection.query(
-            `SELECT * FROM ${table_name} ORDER BY RAND() LIMIT ${limit};`, (err, results, fields) => {
+            `SELECT * FROM ${table_name} LIMIT ${limit};`, (err, results, fields) => {
                 if(err) {
                     console.log(err);
                 }
@@ -146,7 +146,7 @@ router.get('/test', cors(corsOptions), (req, res) => {
     })
 });
 
-router.get('/get_seller', cors(corsOptions), (req, res) => { //{id: optional, product_id: optional}
+router.get('/get_seller', cors(corsOptions), (req, res) => { //{id: optional, product_id: optional, user_id: optional}
 
     if(req.query.id) {
         const id = req.query.id;
@@ -162,7 +162,7 @@ router.get('/get_seller', cors(corsOptions), (req, res) => { //{id: optional, pr
     
             }
           )
-    } else {
+    } else if(req.query.product_id) { //this definitely does not work
         const id = req.query.product_id;
         connection.query(
             `SELECT * FROM sellers WHERE product_id=${id} LIMIT 1;`, (err, results, fields) => {
@@ -176,6 +176,20 @@ router.get('/get_seller', cors(corsOptions), (req, res) => { //{id: optional, pr
     
             }
           )
+    } else {
+        const id = req.query.user_id;
+        connection.query(
+            `SELECT * FROM sellers WHERE owner_id=${id} LIMIT 1;`, (err, results, fields) => {
+                if(err) {
+                    console.log(err);
+                }
+                else {
+                    console.log(results)
+                    res.json(results)
+                }
+    
+            }
+          )  
     }
 
 })
