@@ -17,7 +17,7 @@ function Dashboard() {
     let params = useParams();
     const { user, isAuthenticated } = useAuth0();
     const date = new Date();
-    const [shop, setShop] = useState();
+    const [shop, setShop] = useState(true);
     const navigate = useNavigate();
 
     const handleRegisterBusiness = () => {
