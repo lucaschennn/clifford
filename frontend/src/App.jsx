@@ -10,6 +10,7 @@ import Products from './pages/Products'
 import Dashboard from './pages/Dashboard'
 import Checkout from './pages/Checkout'
 import Callback from './Callback'
+import NewBusiness from './pages/NewBusiness'
 import NavBar from './NavBar'
 import DashboardNav from './components/dashboardNav'
 
@@ -36,6 +37,7 @@ const App = () => {
          <Route path="/dashboard/" element={<Dashboard/>} />
          <Route path="/dashboard/:page" element={<Dashboard/>} />
          <Route path="/checkout" element={<Checkout/>} />
+         <Route path="/register-business" element={<NewBusiness/>} />
       </Routes>
     </>
  )
