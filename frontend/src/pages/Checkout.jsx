@@ -37,13 +37,13 @@ export default function Checkout() {
 
   useEffect(() => {
     if(!isLoading) {
-      fetch('http://localhost:5000/api/get_user?' + new URLSearchParams({
+      fetch('http://localhost:8000/api/get_user?' + new URLSearchParams({
           email: user.email
       }))
       .then((res) => res.json())
       .then((data) => {
           setId(data.id);
-          return fetch('http://localhost:5000/api/get_cart?' + new URLSearchParams({
+          return fetch('http://localhost:8000/api/get_cart?' + new URLSearchParams({
             id: data.id
           }))
       })
@@ -121,8 +121,8 @@ export default function Checkout() {
 
       </div>
       ))}
-      <form action="http://localhost:5000/api/create-checkout-session" method="POST">
-        <button className = "btn btn-primary" type="submit">
+      <form action="http://localhost:8000/api/create-checkout-session" method="POST">
+        <button type="submit" id="generic-button">
           Checkout
         </button>
       </form>

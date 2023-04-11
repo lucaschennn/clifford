@@ -46,14 +46,14 @@ function Home() {
         console.log("running useeffect again")
         let url;
         if(!showing.products) {
-            url = 'http://localhost:5000/api/get_featured?mode=businesses&'
+            url = 'http://localhost:8000/api/get_featured?mode=businesses&'
         }
         else {
-            url = 'http://localhost:5000/api/get_featured?mode=products&'
+            url = 'http://localhost:8000/api/get_featured?mode=products&'
         }
         console.log("showing products" + showing.products);
         if(params.query) { // there is a search
-            fetch('http://localhost:5000/api/search?' + new URLSearchParams({
+            fetch('http://localhost:8000/api/search?' + new URLSearchParams({
                 query: params.query,
                 products: showing.products
              }))
@@ -64,7 +64,7 @@ function Home() {
              })
         }
         else if(isAuthenticated) { // looking at featured
-            fetch('http://localhost:5000/api/get_user?' + new URLSearchParams({
+            fetch('http://localhost:8000/api/get_user?' + new URLSearchParams({
                 email: user.email
             }))
             .then((res) => res.json())
@@ -300,7 +300,7 @@ function Home() {
                             thumbnails.map((product) => (
                                 <div key={product.id} id={product.id} className="thumbnail" onClick={handleNavigate}>
                                     <div className="placeholder-img">
-                                        <img src={"http://127.0.0.1:5173/images/products/"+product.product_url} className="thumbnail-img"></img>
+                                        <img src={"http://localhost:5173/images/products/"+product.product_url} className="thumbnail-img"></img>
                                     </div>
                                     <h5 className="display-5">
                                         {product.name}
@@ -314,7 +314,7 @@ function Home() {
                             thumbnails.map((seller) => (
                                 <div key={seller.id} id={seller.id} className="thumbnail" onClick={handleNavigate}>
                                     <div className="placeholder-img">
-                                        <img src={"http://127.0.0.1:5173/images/thumbnails/"+seller.thumbnail} className="thumbnail-img"></img>
+                                        <img src={"http://localhost:5173/images/thumbnails/"+seller.thumbnail} className="thumbnail-img"></img>
                                     </div>
 
                                     <h5 className="display-5">
@@ -341,7 +341,7 @@ function Home() {
             </div>
             <Modal show={modal} onHide={handleModalClose}>
                 <Modal.Header closeButton>
-                <Modal.Title>Register/login in to view!</Modal.Title>
+                <Modal.Title>Register/login to view!</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Creating an account takes just a few seconds!</Modal.Body>
                 <Modal.Footer>

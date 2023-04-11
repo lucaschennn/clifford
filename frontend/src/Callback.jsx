@@ -7,7 +7,7 @@ function Callback() {
     if(isAuthenticated) {
         console.log(user.email);
         console.log(user.username);
-        fetch("http://localhost:5000/api/insert/user")
+        fetch("http://localhost:8000/api/insert/user")
         .then(response => response.json())
         .then((data) => {
             console.log(data);

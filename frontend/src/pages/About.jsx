@@ -5,7 +5,7 @@ function About() {
 
     useEffect(() => {
         
-        fetch('http://localhost:5000/api/search?' + new URLSearchParams({
+        fetch('http://localhost:8000/api/search?' + new URLSearchParams({
            query: "carrots",
            products: true
         }))

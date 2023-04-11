@@ -26,7 +26,7 @@ const connection = mysql.createConnection({
 connection.connect()
   
 const corsOptions = {
-    origin: 'http://127.0.0.1:5173',
+    origin: 'http://localhost:5173',
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
     allowedHeaders: 'Content-Type,Authorization',
@@ -34,7 +34,7 @@ const corsOptions = {
 }
 router.use(cors(corsOptions));
 const checkJwt = auth({
-    audience: 'http://localhost:5000',
+    audience: 'http://localhost:8000',
     issuerBaseURL: corsOptions.origin,
 });
   
@@ -60,7 +60,6 @@ router.get('/get_user', cors(corsOptions), (req, res) => {
 
         }
       )
-
 });
 
 router.get('/get_featured', cors(corsOptions), (req, res) => {
@@ -275,8 +274,8 @@ router.post('/create-checkout-session', cors(corsOptions), async (req, res) => {
         ],
         mode: 'payment',
         //only instance i think i have of hardcoding frontend domain, should change in future
-        success_url: 'http://127.0.0.1:5173?success=true',
-        cancel_url: 'http://127.0.0.1:5173?success=false',
+        success_url: 'http://localhost:5173?success=true',
+        cancel_url: 'http://localhost:5173?success=false',
     })
 
     res.redirect(303, session.url);

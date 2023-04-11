@@ -18,7 +18,7 @@ const EditProfile = () => {
     }
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/get_user?' + new URLSearchParams({
+        fetch('http://localhost:8000/api/get_user?' + new URLSearchParams({
             email: user.email
         }))
         .then((res) => res.json())
@@ -57,7 +57,7 @@ const EditProfile = () => {
             redirect('/profile')
         }
         else {
-            fetch('http://localhost:5000/api/update_user?' + new URLSearchParams({...text, old_email: user.email}))
+            fetch('http://localhost:8000/api/update_user?' + new URLSearchParams({...text, old_email: user.email}))
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);

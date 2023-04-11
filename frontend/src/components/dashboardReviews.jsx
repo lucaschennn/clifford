@@ -2,19 +2,40 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 
-function DashboardProducts() {
+// note this is hardcoded LOL
+function DashboardReviews() {
     let params = useParams();
     const location = useLocation();
+    const [shop, setShop] = useState();
     console.log(location.pathname);
 
-    const { user, isAuthenticated, isLoading } = useAuth0();
-    const [shop, setShop] = useState();
-    const [products, setProducts] = useState([{
-        product_url: '1.jpg',
-        name: 'Loading',
-        description: 'Loading'
-    }])
-
+    const reviews = [
+    {
+        user: 'claireysun',
+        listing: 'Carrots',
+        review: 'Very delicious! Would buy again :)'
+    },
+    {
+        user: 'faith.tangg',
+        listing: 'Custom Crochet Sweater',
+        review: 'super cute & fuzzy'
+    },
+    {
+        user: 'lucaschen',
+        listing: 'Strawberry Macarons',
+        review: 'So tasty!! I love strawberry anything so this was great!'
+    },
+    {
+        user: 'cowmoomoo',
+        listing: 'Custom Crochet Sweater',
+        review: 'The custom colors are very nice.'
+    },
+    {
+        user: 'james03',
+        listing: 'Macarons',
+        review: 'Would love to see a mango flavor someday'
+    },
+    ]
     useEffect(() => {
         fetch(`http://localhost:8000/api/get_seller?` + new URLSearchParams({
             id: params.id,
@@ -23,38 +44,26 @@ function DashboardProducts() {
         .then((data) => {
             console.log(data[0]);
             setShop(data[0]);
-            fetch('http://localhost:8000/api/get_product?' + new URLSearchParams({
-                seller_id: data[0].id,
-                limit: 10
-            }))
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                setProducts(data);
-            })
-        })
-        .catch((error) => {
-            console.log("No seller found");
-        })
-    }, []);
+        }
+    )})
 
-    if (!products) {
+    if (!reviews) {
         return (
             <div className="row w-100">
                 <div className='col-8' id='dashboard-content'>
-                    <h4 className="text-clifford-pink">My Listings</h4>
+                    <h4 className="text-clifford-pink">Customer Reviews</h4>
                     <h5 className="text-muted" id="date-string">@{shop.name}</h5>
-                    <h5 className="text-muted" id="date-string">No listings to display.</h5>
+                    <h5 className="text-muted" id="date-string">No reviews to display.</h5>
                 </div>
             </div>
         )
     }
 
     else {
-        return (products && shop &&
+        return (shop &&
             <div className="row w-100">
                 <div className='col-8' id='dashboard-content'>
-                    <h4 className="text-clifford-pink">My Listings</h4>
+                    <h4 className="text-clifford-pink">Customer Reviews </h4>
                     <h5 className="text-muted" id="date-string">@{shop.name}</h5>
                     <div id="my-listings-container">
                         {
@@ -70,4 +79,4 @@ function DashboardProducts() {
 
 }
 
-export default DashboardProducts;
+export default DashboardReviews;

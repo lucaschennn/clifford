@@ -22,7 +22,7 @@ function Products() {
     
     useEffect(() => {
 
-        fetch('http://localhost:5000/api/get_product?' + new URLSearchParams({
+        fetch('http://localhost:8000/api/get_product?' + new URLSearchParams({
             product_id: params.id,
         }))
         .then((res) => res.json())
@@ -34,7 +34,7 @@ function Products() {
         })
         .then((data) => {
             console.log(products[0])
-            fetch('http://localhost:5000/api/get_seller?' + new URLSearchParams({
+            fetch('http://localhost:8000/api/get_seller?' + new URLSearchParams({
                 id: data[0].business_id,
             }))
             .then((res) => res.json())
@@ -46,7 +46,7 @@ function Products() {
     }, [])
     useEffect(() => {
         if(!isLoading) {
-            fetch('http://localhost:5000/api/get_user?' + new URLSearchParams({
+            fetch('http://localhost:8000/api/get_user?' + new URLSearchParams({
                 email: user.email
             }))
             .then((res) => res.json())
@@ -66,7 +66,7 @@ function Products() {
     }
 
     const handleCartBtn = async (e) => {
-        fetch('http://localhost:5000/api/update_cart', {
+        fetch('http://localhost:8000/api/update_cart', {
             method: 'POST',
             body: JSON.stringify({userid: id, productid: products[0].id}),
             headers: {

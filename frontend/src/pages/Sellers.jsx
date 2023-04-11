@@ -8,14 +8,14 @@ function Sellers() {
     const [products, setProducts] = useState([])
     
     useEffect(() => {
-        fetch(`http://localhost:5000/api/get_seller?` + new URLSearchParams({
+        fetch(`http://localhost:8000/api/get_seller?` + new URLSearchParams({
             id: params.id,
         }))
         .then((res) => res.json())
         .then((data) => {
             console.log(data);
             setData(data[0])
-            fetch('http://localhost:5000/api/get_product?' + new URLSearchParams({
+            fetch('http://localhost:8000/api/get_product?' + new URLSearchParams({
                 seller_id: data[0].id,
                 limit: 10
             }))
