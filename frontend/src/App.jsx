@@ -13,6 +13,7 @@ import Callback from './Callback'
 import NewBusiness from './pages/NewBusiness'
 import NavBar from './NavBar'
 import DashboardNav from './components/dashboardNav'
+import NewListing from './pages/NewListing';
 
 
 //configure routes
@@ -38,6 +39,7 @@ const App = () => {
          <Route path="/dashboard/:page" element={<Dashboard/>} />
          <Route path="/checkout" element={<Checkout/>} />
          <Route path="/register-business" element={<NewBusiness/>} />
+         <Route path="/new-listing" element={<NewListing />} />
       </Routes>
     </>
  )

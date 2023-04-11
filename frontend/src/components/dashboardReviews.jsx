@@ -7,6 +7,7 @@ function DashboardReviews() {
     let params = useParams();
     const location = useLocation();
     const [shop, setShop] = useState();
+    const { user, isAuthenticated, isLoading } = useAuth0();
     console.log(location.pathname);
 
     const reviews = [
@@ -37,22 +38,30 @@ function DashboardReviews() {
     },
     ]
     useEffect(() => {
-        fetch(`http://localhost:8000/api/get_seller?` + new URLSearchParams({
-            id: params.id,
+        fetch(`http://localhost:8000/api/get_user?` + new URLSearchParams({
+            email: user.email
         }))
         .then((response) => response.json())
         .then((data) => {
-            console.log(data[0]);
-            setShop(data[0]);
-        }
-    )})
+            fetch('http://localhost:8000/api/get_seller?' + new URLSearchParams({
+                user_id: data.id
+            }))
+            .then((res) => res.json())
+            .then((data) => {
+                setShop(data[0].name);
+            })
+        })
+        .catch((error) => {
+            console.log("No seller found");
+        })
+    }, []);
 
     if (!reviews) {
         return (
             <div className="row w-100">
                 <div className='col-8' id='dashboard-content'>
                     <h4 className="text-clifford-pink">Customer Reviews</h4>
-                    <h5 className="text-muted" id="date-string">@{shop.name}</h5>
+                    <h5 className="text-muted" id="date-string">@{shop}</h5>
                     <h5 className="text-muted" id="date-string">No reviews to display.</h5>
                 </div>
             </div>
@@ -60,15 +69,20 @@ function DashboardReviews() {
     }
 
     else {
-        return (shop &&
+        return (
             <div className="row w-100">
                 <div className='col-8' id='dashboard-content'>
                     <h4 className="text-clifford-pink">Customer Reviews </h4>
-                    <h5 className="text-muted" id="date-string">@{shop.name}</h5>
-                    <div id="my-listings-container">
+                    <h5 className="text-muted" id="date-string">@{shop}</h5>
+                    <div id='date-string'>
                         {
-                            products.map((product) => (
-                                <MyListing image='../images/products/1.jpg' name={product.name} id={product.id} url={product.url}/>
+                            reviews.map((review, index) => (
+                                <div key={index} id='review-list'>
+                                    <b>{review.user}</b> left a review on your listing, <b>{review.listing}</b>:
+                                    <div id='review'>
+                                        {review.review}
+                                    </div>
+                                </div>
                             ))
                         }
                     </div>

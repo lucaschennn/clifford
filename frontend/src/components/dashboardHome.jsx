@@ -32,6 +32,7 @@ function DashboardHome() {
                     <UpdateBox title='Recent Sales' items={['bobbyzzz', 'hadz', 'com']}/> 
                 </div>
                 <div id='recent-activity-text'>
+                        <b>Older Updates:</b>
                         {activities && activities.map((item, index) =>
                                 <ul key={index}>
                                     {item}

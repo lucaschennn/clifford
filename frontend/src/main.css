@@ -403,3 +403,11 @@ a[disabled] {
 #form-register {
     padding-top: 50px;
 }
+
+#review-list {
+    padding-top: 20px;
+}
+
+#review {
+    font-style: italic;
+}

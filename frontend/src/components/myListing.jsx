@@ -16,7 +16,7 @@ function MyListing(props) {
     }
 
     return (
-        <div id='my-listing'>
+        <div id='my-listing' key={props.index}>
             <img src={'../images/products/' + props.url} className="fit-main-img"/>
             {/* <div id='listing-title' onClick={(event) => handleViewProduct(props.id)}> */}
             <div id='listing-title'>

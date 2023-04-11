@@ -8,6 +8,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import DashboardReviews from '../components/dashboardReviews';
+import DashboardAnalytics from '../components/dashboardAnalytics';
 
 function Dashboard() {
 
@@ -25,13 +26,13 @@ function Dashboard() {
     }
     useEffect(() => {
         if(isAuthenticated) {
-            fetch(`http://localhost:5000/api/get_user?` + new URLSearchParams({
+            fetch(`http://localhost:8000/api/get_user?` + new URLSearchParams({
                 email: user.email
             }))
             .then((response) => response.json())
             .then((data) => {
                 setShop(data[0]);
-                fetch('http://localhost:5000/api/get_product?' + new URLSearchParams({
+                fetch('http://localhost:8000/api/get_product?' + new URLSearchParams({
                     user_id: data.id,
                     limit: 10
                 }))
@@ -50,16 +51,18 @@ function Dashboard() {
         }
 
     }, [isAuthenticated]);
-    // if (shop) {
+
     if (shop) {
         switch(location.pathname) {
             case "/dashboard/products":
                 return (isAuthenticated &&
                     <DashboardProducts />)
             case "/dashboard/reviews":
-                return <DashboardReviews />
+                return (isAuthenticated && 
+                    <DashboardReviews />)
             case "/dashboard/analytics":
-                return <DashboardHome />
+                return (isAuthenticated && 
+                    <DashboardAnalytics />)
             case "/dashboard/settings":
                 return <DashboardHome />
         }
