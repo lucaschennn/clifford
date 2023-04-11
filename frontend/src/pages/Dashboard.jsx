@@ -23,20 +23,35 @@ function Dashboard() {
     const handleRegisterBusiness = () => {
         navigate('/register-business/')
     }
-
     useEffect(() => {
-        fetch(`http://localhost:8000/api/get_seller?` + new URLSearchParams({
-            id: params.id,
-        }))
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data[0]);
-            setShop(data[0]);
-        })
-    });
+        if(isAuthenticated) {
+            fetch(`http://localhost:5000/api/get_user?` + new URLSearchParams({
+                email: user.email
+            }))
+            .then((response) => response.json())
+            .then((data) => {
+                setShop(data[0]);
+                fetch('http://localhost:5000/api/get_product?' + new URLSearchParams({
+                    user_id: data.id,
+                    limit: 10
+                }))
+                .then((res) => res.json())
+                .then((data) => {
+                    if('status' in data) {
+                        setShop(false);
+                    } else {
+                        setShop(true);
+                    }
+                })
+            })
+            .catch((error) => {
+                console.log("No seller found");
+            })
+        }
 
+    }, [isAuthenticated]);
     // if (shop) {
-    if (True) {
+    if (shop) {
         switch(location.pathname) {
             case "/dashboard/products":
                 return (isAuthenticated &&

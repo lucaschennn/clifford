@@ -194,7 +194,7 @@ router.get('/get_seller', cors(corsOptions), (req, res) => { //{id: optional, pr
 
 })
 
-router.get('/get_product', cors(corsOptions), (req, res) => { // {seller_id: null, product_id: null, limit: required if seller_id}
+router.get('/get_product', cors(corsOptions), (req, res) => { // {user_id: null, seller_id: null, product_id: null, limit: required if seller_id/user_id}
     if(req.query.seller_id) {
         const id = req.query.seller_id;
         const limit = req.query.limit;
@@ -210,6 +210,36 @@ router.get('/get_product', cors(corsOptions), (req, res) => { // {seller_id: nul
     
             }
           )
+    } else if (req.query.user_id) {
+        const id = req.query.user_id;
+        connection.query(
+            `SELECT * FROM sellers WHERE owner_id=${id} LIMIT 1;`, (err, results, fields) => {
+                if(err) {
+                    console.log(err);
+                }
+                else {
+                    if(results.length === 0) {
+                        res.json({status: "no business"})
+                    } else {
+                        const seller_id = results[0].id;
+                        console.log(seller_id);
+                        connection.query(
+                            `SELECT * FROM products WHERE id="${seller_id}";`, (err, results, fields) => {
+                                if(err) {
+                                    console.log(err);
+                                }
+                                else {
+                                    console.log(results)
+                                    res.json(results)
+                                }
+                    
+                            }
+                        )
+                    }
+                }
+    
+            }
+          )  
     } else { // must have product_id
         const id = req.query.product_id;
         connection.query(

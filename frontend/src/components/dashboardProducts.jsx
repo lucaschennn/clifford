@@ -6,26 +6,31 @@ import MyListing from './myListing';
 function DashboardProducts() {
     let params = useParams();
     const location = useLocation();
-    console.log(location.pathname);
+
 
     const { user, isAuthenticated, isLoading } = useAuth0();
-    const [shop, setShop] = useState();
+    const [shop, setShop] = useState('');
     const [products, setProducts] = useState([{
         product_url: '1.jpg',
         name: 'Loading',
         description: 'Loading'
     }])
-
     useEffect(() => {
-        fetch(`http://localhost:8000/api/get_seller?` + new URLSearchParams({
-            id: params.id,
+        fetch(`http://localhost:5000/api/get_user?` + new URLSearchParams({
+            email: user.email
         }))
         .then((response) => response.json())
         .then((data) => {
-            console.log(data[0]);
+            fetch('http://localhost:5000/api/get_seller?' + new URLSearchParams({
+                user_id: data.id
+            }))
+            .then((res) => res.json())
+            .then((data) => {
+                setShop(data[0].name);
+            })
             setShop(data[0]);
-            fetch('http://localhost:8000/api/get_product?' + new URLSearchParams({
-                seller_id: data[0].id,
+            fetch('http://localhost:5000/api/get_product?' + new URLSearchParams({
+                user_id: data.id,
                 limit: 10
             }))
             .then((res) => res.json())
@@ -44,7 +49,7 @@ function DashboardProducts() {
             <div className="row w-100">
                 <div className='col-8' id='dashboard-content'>
                     <h4 className="text-clifford-pink">My Listings</h4>
-                    <h5 className="text-muted" id="date-string">@{shop.name}</h5>
+
                     <h5 className="text-muted" id="date-string">No listings to display.</h5>
                 </div>
             </div>
@@ -52,15 +57,15 @@ function DashboardProducts() {
     }
 
     else {
-        return (products && shop &&
+        return (products &&
             <div className="row w-100">
                 <div className='col-8' id='dashboard-content'>
                     <h4 className="text-clifford-pink">My Listings</h4>
-                    <h5 className="text-muted" id="date-string">@{shop.name}</h5>
+                    <h5 className="text-muted" id="date-string">@{shop}</h5>
                     <div id="my-listings-container">
                         {
                             products.map((product) => (
-                                <MyListing image='../images/products/1.jpg' name={product.name} id={product.id} url={product.url}/>
+                                <MyListing key={product.id} name={product.name} id={product.id} url={product.product_url}/>
                             ))
                         }
                     </div>
