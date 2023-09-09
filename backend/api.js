@@ -104,7 +104,7 @@ router.get('/update_user', cors(corsOptions), (req, res) => {
                 var options = { method: 'POST',
                     url: 'https://dev-844ihsmwwpk7lzn5.us.auth0.com/oauth/token',
                     headers: { 'content-type': 'application/json' },
-                    body: '{"client_id":"Dd5QdH5yPUr5Fnulqa6hkX29OkgliyaM","client_secret":"6ivBKMeH7eWSS3rZBcSX8Dmf8ebww9K6ORXsJ62IC39HbsbRDEykifpSbd-NYw_u","audience":"https://dev-844ihsmwwpk7lzn5.us.auth0.com/api/v2/","grant_type":"client_credentials"}' };
+                    body: '{"client_id":"Dd5QdH5yPUr5Fnulqa6hkX29OkgliyaM","client_secret":"xxx","audience":"https://dev-844ihsmwwpk7lzn5.us.auth0.com/api/v2/","grant_type":"client_credentials"}' };
 
                 request(options, function (error, response, body) {
                     if (error) throw new Error(error);
